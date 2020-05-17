@@ -1,5 +1,7 @@
 package com.poo.viewpagerdrawlayout;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.poo.viewpagerdrawlayout.entity.StoryEntity;
@@ -12,8 +14,11 @@ import java.util.List;
 
 public class CommonUtils {
     private static final String STORY_PATH = "Story.txt";
-    private static final String TAG = CommonUtils.class.getName() ;
+    private static final String TAG = CommonUtils.class.getName();
+    private static final String KEY_DATA = "PREFILE";
+    private static final String KEY_POSITION = "1996";
     private static CommonUtils instance;
+    private List<StoryEntity> listStorys;
 
     private CommonUtils() {
     }
@@ -26,11 +31,11 @@ public class CommonUtils {
     }
 
     public List<StoryEntity> getStories() {
-        List<StoryEntity> listStorys = new ArrayList<>();
+        listStorys = new ArrayList<>();
         try {
             InputStream in = App.getInstance().getAssets().open(STORY_PATH);
             BufferedReader buf = new BufferedReader(new InputStreamReader(in));
-            String name = null, content = null;
+            String name = null, content = "";
             String line = buf.readLine();
             while (line != null) {
                 if (name == null) {
@@ -39,20 +44,35 @@ public class CommonUtils {
                 } else if (line.contains("','0');")) {
                     StoryEntity story = new StoryEntity(name, content);
                     listStorys.add(story);
-                    name="";
-                    content="";
+                    name = null;
+                    content = "";
                 } else {
-                    content += line+"\n";
+                    content += line + "\n";
 
                 }
                 line = buf.readLine();
             }
             buf.close();
             in.close();
-            Log.i(TAG,"list"+listStorys.size());
+            Log.i(TAG, "list" + listStorys.size());
         } catch (Exception e) {
             e.getStackTrace();
         }
         return listStorys;
     }
+
+    public void savePositionStory(int currentItem) {
+        SharedPreferences sharedPreferences = App.getInstance().getSharedPreferences(KEY_DATA, Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+        edit.putInt(KEY_POSITION, currentItem);
+        edit.apply();
+
+    }
+
+    public int getPositionStory() {
+        SharedPreferences sharedPreferences = App.getInstance().getSharedPreferences(KEY_DATA, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(KEY_POSITION, 1);
+    }
+
+
 }
