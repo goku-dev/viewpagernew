@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:shadowColor="@color/colorYelow"
+        android:shadowDx="10"
+        android:shadowDy="10"
+        android:text="tiêu đề"
+        android:textColor="@color/colorPrimary"
+        android:textSize="60dp"
+
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="top|left"
+            android:lineSpacingExtra="5dp"
+            android:text="tiêu đề"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30dp"
+
+            />
+    </ScrollView>
+
+</LinearLayout>
